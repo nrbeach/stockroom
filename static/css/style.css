@@ -1,0 +1,19 @@
+.table-pill-location {
+    background-color: cornflowerblue;
+    color: white;
+}
+
+.table-pill-category {
+    background-color: palevioletred;
+    color: white;
+}
+
+.table-pill-interface {
+    background-color: sienna;
+    color: white;
+}
+
+.table-link {
+    color: dimgrey;
+    text-decoration: none;
+}

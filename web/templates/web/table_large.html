@@ -1,0 +1,13 @@
+{% block content %}
+{% load static %}
+<div class="table-bordered flex-container">
+    <table class="table table-striped-columns">
+        {% include "web/table_header_long.html" %}
+        <tbody>
+        {% for component in components.all %}
+            {% include "web/table_row_long.html" %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

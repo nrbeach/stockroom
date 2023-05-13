@@ -1,0 +1,21 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load static %}
+{% if component.image %}
+<h2>{{ component.name }}</h2>
+<img src="{{ component.image.url }}" class="rounded" width="250px" height="250px">
+{% endif %}
+<div class="table-bordered flex-container">
+    <!-- Manually construct the table b/c large iterates over .all -->
+    <table class="table table-striped-columns">
+    {% include "web/table_header_long.html" %}
+        <tbody>
+            {% include "web/table_row_long.html" %}
+        </tbody>
+    </table>
+</div>
+<form action="/edit/{{ context.uuid }}" method="get">
+    {% csrf_token %}
+    <input type="Submit" value="Edit" class="Button">
+</form>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "web/base.html" %}
+{% block content %}
+<form action="{{ context.url }}{% if context.pk %}{{ context.pk }}{% endif %}" method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <br>
+    <input type="submit" value="Submit" class="button">
+</form>
+{% endblock %}

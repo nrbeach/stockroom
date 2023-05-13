@@ -1,0 +1,12 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load static %}
+<h2>{{ context.title }} - {{ context.name }}</h2>
+<div class="table-bordered flex-container">
+    {% include "web/table_large.html" %}
+</div>
+<form action="/{{ context.title.lower }}/edit/{{ context.uuid }}" method="get">
+    {% csrf_token %}
+    <input type="Submit" value="Edit" class="Button">
+</form>
+{% endblock %}

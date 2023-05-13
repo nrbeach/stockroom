@@ -1,0 +1,11 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load static %}
+{% if context %}
+<div class="flex-container">
+    <h2>{{context.title}} {{ context.name }}</h2>
+</div>
+{% endif %}
+<h4><a href="/new/" class="table-link">+</a></h4>
+{% include "web/table_large.html" %}
+{% endblock %}

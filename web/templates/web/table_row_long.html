@@ -1,0 +1,27 @@
+{% block content %}
+{% load static %}
+<tr>
+    <td><a href="/detail/{{ component.pk }}" class="table-link">{{ component.name }}</a></td>
+    <td><img src="{{ component.image.url }}" class="rounded" style="width:25px;height:25px;"></td>
+    <td><a href="/category/{{ component.category.pk }}"><span class="badge rounded-pill table-pill-category">{{ component.category }}</span></a></td>
+    <td>{{ component.description }}</td>
+    <td>
+        {% if component.interfaces %}
+            {% for iface in component.interfaces.all %}
+                <a href="/interface/{{ iface.pk }}"><span class="badge rounded-pill table-pill-interface">{{ iface.name }}</span></a>
+            {% endfor %}
+        {% endif %}
+    </td>
+    <td>
+        {% if component.voltage_operating %}
+            {{ component.voltage_operating }}V
+        {% endif %}
+    </td>
+    <td>{{ component.count }}</td>
+    <td><a href="{{ component.url }}" target="_blank" class="table-link">{{ component.url }}</a></td>
+    <td><a href="{{ component.datasheet }}" class="table-link" target="_blank">Datasheet</a></td>
+    <td>{{ component.count }}</td>
+    <td>{{ component.mfn_pn }}</td>
+    <td><a href="/location/{{ component.location.pk }}"><span class="badge rounded-pill table-pill-location">{{ component.location }}</span></a></td>
+</tr>
+{% endblock %}
