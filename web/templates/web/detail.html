@@ -9,4 +9,9 @@
     {% csrf_token %}
     <input type="Submit" value="Edit" class="Button">
 </form>
+<br>
+<form action="/{{ context.title.lower }}/edit/{{ context.uuid }}/delete" method="POST">
+    {% csrf_token %}
+    <input type="Submit" value="Delete" class="Button">
+</form>
 {% endblock %}

@@ -28,6 +28,7 @@ class NewComponentForm(forms.Form):
         initial=0,
         widget=forms.CheckboxSelectMultiple(),
     )
+    voltage_operating = forms.FloatField(label="Operating Voltage")
     # TODO should be implementing clean(self)
 
 
