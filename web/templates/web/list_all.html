@@ -1,0 +1,25 @@
+{% extends "web/base.html" %}
+{% block content %}
+{% load static %}
+<div class="flex-container">
+    <h2>{{ context.cls}}</h2>
+</div>
+<h4><a href="/new{{ context.url }}" class="table-link">+</a></h4>
+<table class="table table-bordered table-striped-columns">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Count</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in counts %}
+        <tr>
+            <td><a href="{{ context.url }}{{ object.0 }}" class="table-link">{{ object.1 }}</a></td>
+            <td>{{ object.2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}

@@ -3,6 +3,8 @@
 {% load static %}
 <div class="flex-container">
     <h2>Invalid form data!</h2>
-    {{ form.errors }}
+    {% for err in form.errors %}
+        {{ err }}
+    {% endfor %}}
 </div>
 {% endblock %}

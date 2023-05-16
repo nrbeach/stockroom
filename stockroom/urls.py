@@ -35,26 +35,44 @@ urlpatterns = [
     path("", web_views.index),
     path(
         "new/",
-        web_views.generic_new_item,
-        {"cls": Component, "form_cls": NewComponentForm, "url": "/new/", "files": True},
+        web_views.new_component,
+        {"url": "/new/"},
         name="new",
     ),
     path(
-        "category/",
+        "new/category/",
         web_views.generic_new_item,
         {"cls": Category, "form_cls": NewCategoryForm, "url": "/category/"},
         name="category",
     ),
     path(
-        "location/",
+        "new/location/",
         web_views.generic_new_item,
         {"cls": Location, "form_cls": NewLocationForm, "url": "/location/"},
         name="location",
     ),
     path(
-        "interface/",
+        "new/interface/",
         web_views.generic_new_item,
         {"cls": Interface, "form_cls": NewInterfaceForm, "url": "/interface/"},
+        name="interface",
+    ),
+    path(
+        "category/",
+        web_views.generic_list_all,
+        {"cls": Category, "url": "/category/", "fieldname": "category"},
+        name="category",
+    ),
+    path(
+        "location/",
+        web_views.generic_list_all,
+        {"cls": Location, "url": "/location/", "fieldname": "location"},
+        name="location",
+    ),
+    path(
+        "interface/",
+        web_views.generic_list_all,
+        {"cls": Interface, "url": "/interface/", "fieldname": "interfaces"},
         name="interface",
     ),
     path(
@@ -80,6 +98,22 @@ urlpatterns = [
         web_views.generic_edit_item,
         {"cls": Interface, "files": False},
         name="edit_interface",
+    ),
+    path("edit/<uuid:uuid>/delete", web_views.generic_delete_item, {"cls": Component}),
+    path(
+        "category/edit/<uuid:uuid>/delete",
+        web_views.generic_delete_item,
+        {"cls": Category},
+    ),
+    path(
+        "location/edit/<uuid:uuid>/delete",
+        web_views.generic_delete_item,
+        {"cls": Location},
+    ),
+    path(
+        "interface/edit/<uuid:uuid>/delete",
+        web_views.generic_delete_item,
+        {"cls": Interface},
     ),
     path(
         "detail/<uuid:uuid>",

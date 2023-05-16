@@ -3,7 +3,7 @@
 {% load static %}
 {% if component.image %}
 <h2>{{ component.name }}</h2>
-<img src="{{ component.image.url }}" class="rounded" width="250px" height="250px">
+<img src="{{ component.image.url }}" class="rounded" width="250px">
 {% endif %}
 <div class="table-bordered flex-container">
     <!-- Manually construct the table b/c large iterates over .all -->
@@ -17,5 +17,10 @@
 <form action="/edit/{{ context.uuid }}" method="get">
     {% csrf_token %}
     <input type="Submit" value="Edit" class="Button">
+</form>
+<br>
+<form action="/edit/{{ context.uuid }}/delete" method="POST">
+    {% csrf_token %}
+    <input type="Submit" value="Delete" class="Button">
 </form>
 {% endblock %}

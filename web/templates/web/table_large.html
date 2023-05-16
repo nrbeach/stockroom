@@ -1,7 +1,7 @@
 {% block content %}
 {% load static %}
-<div class="table-bordered flex-container">
-    <table class="table table-striped-columns">
+<div class="flex-container">
+    <table class="table table-bordered table-striped-columns">
         {% include "web/table_header_long.html" %}
         <tbody>
         {% for component in components.all %}

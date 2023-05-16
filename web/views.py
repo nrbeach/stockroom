@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
@@ -6,6 +7,7 @@ from web.forms import EditCategory
 from web.forms import EditComponent
 from web.forms import EditInterface
 from web.forms import EditLocation
+from web.forms import NewComponentForm
 from web.models import Category
 from web.models import Component
 from web.models import Interface
@@ -40,13 +42,55 @@ def index(request):
     return render(request, "web/index.html", {"components": components})
 
 
+def generic_list_all(request, cls, url, fieldname):
+    objects = cls.objects.all()
+    counts = []
+    for object in objects:
+        c = Component.objects.filter(**{fieldname: object}).count()
+        counts.append((object.pk, object.name, c))
+    return render(
+        request,
+        "web/list_all.html",
+        {
+            "objects": objects,
+            "counts": counts,
+            "context": {"url": url, "cls": url.replace("/", "").capitalize()},
+        },
+    )
+
+
+def new_component(request, url):
+    if request.method == "POST":
+        form = NewComponentForm(request.POST, request.FILES)
+        if form.is_valid():
+            if form.cleaned_data:
+                interfaces = form.cleaned_data.pop("interfaces")
+                c = Component(**form.cleaned_data)
+                c.save()
+                c.interfaces.set(interfaces)
+                return HttpResponseRedirect("/")
+        return render(request, "web/invalid_form.html", {form: "form"})
+
+    else:
+        form = NewComponentForm()
+    return render(
+        request, "web/form_simple.html", {"form": form, "context": {"url": url}}
+    )
+
+
 def generic_new_item(request, cls, form_cls, url, files=False):
+    # TODO I need to revert this to a component specific view to handle many to many.
+    # Save the base object, then add each many to many relation, or perhaps scrap the interface relation entirely?
+    # TODO I may be able to use `form.is_multipart()` to remove the files parameter
     if request.method == "POST":
         form = form_cls(request.POST, request.FILES if files else None)
         if form.is_valid():
-            c = cls(**form.cleaned_data)
-            c.save()
-            return HttpResponseRedirect("index.html")
+            if form.cleaned_data:
+                c = cls(**form.cleaned_data)
+                c.save()
+                return HttpResponseRedirect("/")
+        return render(request, "web/invalid_form.html", {form: "form"})
+
     else:
         form = form_cls()
     return render(
@@ -78,3 +122,10 @@ def generic_edit_item(request, uuid, cls, files):
             url = request.path_info.replace("/edit", "")
             return HttpResponseRedirect(url)
         return render(request, "web/invalid_form.html", {"form": form})
+
+
+def generic_delete_item(request, uuid, cls):
+    if request.method == "POST":
+        c = get_object_or_404(cls, pk=uuid)
+        c.delete()
+    return index(request)
