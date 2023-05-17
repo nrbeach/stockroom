@@ -2,4 +2,6 @@
 
 ---
 
-A simple web based components inventory manager.
+A simple web based electronics component inventory manager.
+
+This is current WIP.
